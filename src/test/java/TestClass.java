@@ -1,4 +1,5 @@
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,13 +23,15 @@ public class TestClass {
     void should_return_addition_when_plus_sign_passed_to_the_method() {
 
         given(calculator.calculate(1, 1)).willReturn(2);
-        Assertions.assertEquals(testClassInner.doCalculation("+"), 2);
+        Assertions.assertEquals(testClassInner.doCalculation("+"),2);
+        then(calculator).should().calculate(1,1);
     }
 
     @Test
     void should_throw_exception_when_other_than_plus_sign_passed() {
         given(calculator.calculate(0,0)).willThrow(IllegalStateException.class);
         Assertions.assertThrows(IllegalStateException.class,()-> testClassInner.doCalculation("-"));
+        then(calculator).should().calculate(0,0);
     }
 
     class TestClassInner {
